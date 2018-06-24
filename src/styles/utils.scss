@@ -1,0 +1,21 @@
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+@function rel($px, $unit: 'vw') {
+  @return unquote(strip-units(($px/$app-width) * 100) + $unit);
+}
+
+@mixin aspect-ratio($ratio-or-width, $height: null) {
+  position: relative;
+  &:before {
+    content: '';
+    float: left;
+    padding-bottom: if($height, percentage($height/$ratio-or-width), percentage(1/$ratio-or-width));
+  }
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
